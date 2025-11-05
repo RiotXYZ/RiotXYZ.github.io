@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elysian Shears</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --paper: #fffaf2;
+      --text: #2c2c2c;
+      --accent: #7b3f61;
+      --accent-2: #b57fa5;
+      --muted: #595959;
+      --ink: #1a1a1a;
+      --max-width: 900px;
+    }
+    /* Page background + subtle grain */
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: 'Playfair Display', serif;
+      line-height: 1.9;
+      font-size: 1.08rem;
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #fff 0%, #f6f0ea 60%, #efe6de 100%),
+        linear-gradient(180deg, #faf8f5 0%, #fdfdfb 100%);
+      background-attachment: fixed;
+    }
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--accent) 0%, #5a2f48 100%);
+      color: white;
+      padding: 3.5rem 1rem 3rem;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(91, 47, 72, 0.25);
+    }
+    header h1 {
+      margin: 0;
+      font-family: 'Great Vibes', cursive;
+      font-size: 4rem;
+      letter-spacing: 2px;
+    }
+    header p {
+      margin: 0.75rem 0 0;
+      font-style: italic;
+      font-size: 1.15rem;
+      opacity: 0.9;
+    }
+    /* Main container as a “paper” */
+    main {
+      max-width: var(--max-width);
+      margin: 2.5rem auto 3rem;
+      padding: 2rem 1.5rem;
+      background: var(--paper);
+      border: 1px solid #e8dccf;
+      border-radius: 14px;
+      box-shadow:
+        0 2px 6px rgba(0,0,0,0.06),
+        0 20px 60px rgba(123,63,97,0.12);
+    }
+    /* Chapter headings with flourishes */
+    h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      color: var(--accent);
+      margin: 3.2rem auto 1.6rem;
+      text-align: center;
+      position: relative;
+    }
+    h2::before, h2::after {
+      content: "✦";
+      color: var(--accent-2);
+      margin: 0 0.6rem;
+      font-size: 1.2rem;
+      opacity: 0.85;
+    }
+    /* Paragraphs + subtle fade-in */
+    p {
+      margin: 1.25rem 0;
+      text-align: justify;
+      color: var(--ink);
+      animation: fadeIn 0.8s ease both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Drop-cap for the first paragraph after each h2 */
+    h2 + p::first-letter {
+      float: left;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.8rem;
+      line-height: 1;
+      margin-right: 0.5rem;
+      margin-top: 0.25rem;
+      color: var(--accent);
+    }
+    /* Quoted dialogue styling */
+    blockquote {
+      margin: 2rem auto;
+      padding: 1.2rem 1.5rem;
+      background: #f9f5f8;
+      border-left: 5px solid var(--accent);
+      font-style: italic;
+      color: var(--muted);
+      max-width: 720px;
+      box-shadow: 0 2px 6px rgba(123,63,97,0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      animation: fadeIn 0.9s ease both;
+    }
+    blockquote:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(123,63,97,0.16);
+    }
+    /* Image comment boxes (drop-in sections for images or notes) */
+    .image-note {
+      margin: 2rem auto;
+      padding: 1rem 1.2rem;
+      border: 1px dashed #caa7bf;
+      border-radius: 10px;
+      background: #fff7fb;
+      color: #3a2b33;
+      max-width: 720px;
+    }
+    .image-note h3 {
+      margin: 0 0 0.6rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+    .image-note p {
+      margin: 0.4rem 0 0.2rem;
+      color: #4a3b42;
+      text-align: left;
+    }
+    .image-note .slot {
+      margin-top: 0.75rem;
+      padding: 0.75rem;
+      background: #fff;
+      border: 1px solid #e3d5df;
+      border-radius: 8px;
+      text-align: center;
+      color: #7d6b75;
+      font-size: 0.95rem;
+    }
+    /* Horizontal divider between scenes */
+    .scene-divider {
+      margin: 2.4rem auto;
+      text-align: center;
+      opacity: 0.7;
+    }
+    .scene-divider span {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      color: var(--accent);
+      border-top: 1px solid #e7d6e3;
+      border-bottom: 1px solid #e7d6e3;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.2rem;
+    }
+    /* Footer + license */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    footer .brand {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.35rem;
+      letter-spacing: 1px;
+      color: var(--accent);
+    }
+    footer pre {
+      text-align: left;
+      max-width: var(--max-width);
+      margin: 1rem auto;
+      padding: 1rem;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Elysian Shears</h1>
+    <p>A Gothic Tale</p>
+  </header>
+
+  <main>
+    <!-- Chapter One -->
+    <h2>Chapter One: The Curiosity of Gabriel Attal</h2>
+    <p>Gabriel Attal was not a man easily captivated. Raised among the grind of politics, he had long learned to shield himself from anything too extraordinary, anything that could distract him from his ambition. He was sharp, calculated, and his ascent in the French political world had been marked by his charm and ability to navigate public opinion with ease. Yet, beneath his well-honed exterior, there was something more—a hunger for truth that went beyond speeches and policy.</p>
+
+    <p>It was this hunger, this quiet curiosity, that led him to the story of Edward Scissorhands.</p>
+
+    <p>The rumors had swirled for years, whispered among the political elite and forgotten artists alike: a man, or rather a creation, living in isolation just outside Paris, with blades for hands. The tale seemed like something out of a gothic novel, a strange oddity—a tragedy wrapped in mystery. Gabriel first heard about Edward during a dinner with a journalist, Kim. She had mentioned him offhandedly, as one does when referring to the outlandish, a kind of footnote in a conversation about society’s forgotten figures.</p>
+
+    <blockquote>
+      "He's real, you know," Kim had said, swirling her wine glass. "Edward Scissorhands. Lives in a mansion on the outskirts of the city. People say he’s an artist. He cuts flowers, carves sculptures. Beautiful things. But no one ever sees him. Only a few brave souls who venture out there."
+    </blockquote>
+
+    <p>At first, Gabriel had been skeptical, dismissing it as the kind of sensationalism he was used to in the media. But the idea of this strange man—trapped by his own existence—lingered in his mind. What was it like to live with such a curse, such beauty, yet remain invisible to the world?</p>
+
+    <p>His curiosity gnawed at him over the following weeks. He had become numb to the superficiality of political life, surrounded by self-interested people who sought power for its own sake. Edward, in contrast, represented something raw and unpolished—something Gabriel couldn’t quite name, but felt the urge to understand.</p>
+
+    <p>And so, against his better judgment, Gabriel made the decision to go. Not as a politician, not as a man with influence or a platform—but as someone trying to make sense of a world that seemed increasingly hollow. He sent a letter, a simple inquiry: <em>I would like to meet you. To understand your story, if you are willing to share it.</em></p>
+
+    <p>The response, surprisingly, came quickly. Edward had agreed to meet him. Gabriel wasn’t sure whether it was curiosity or a deeper loneliness that drove Edward to accept, but the invitation was extended. And so, one crisp autumn evening, Gabriel made his way to the mansion on the outskirts of Paris.</p>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Two -->
+    <h2>Chapter Two: The Mansion in the Woods</h2>
+    <p>The mansion was nothing like Gabriel had expected. It was vast and intimidating, a crumbling relic from another time. The trees surrounding it seemed to reach out like silent sentinels, their bare branches casting long shadows on the ground. The air felt different here, colder, more still. Gabriel’s heart beat just a little faster as he approached the front door.</p>
+
+    <p>He knocked twice, the sound echoing through the empty yard. The door opened slowly, revealing Edward—a tall figure standing in the threshold, bathed in dim light. His eyes were dark and cautious, but there was an undeniable presence about him, something that went beyond his strange appearance.</p>
+
+    <p>Gabriel didn’t know what he expected, but it certainly wasn’t this. Edward’s face was soft and sharp in equal measure, his pale skin contrasting with the dark, disheveled look of the mansion. But it wasn’t his appearance that held Gabriel’s attention—it was the sense of silence around him. He was a man who had been alone for far too long, who had lived not in the world, but beside it.</p>
+
+    <p>“Mr. Attal,” Edward said quietly, his voice lower than Gabriel had imagined, carrying the weight of years of isolation. His hands—his scissorhands—hung awkwardly at his sides, shining in the dim light. Gabriel could feel the weight of those blades, their dangerous beauty, though they never moved.</p>
+
+    <p>“It’s... good to meet you, Edward,” Gabriel replied, hesitating. There was a tenderness to his words, a recognition that this was not just a curiosity anymore—it was something more. “I wasn’t sure if you would agree to meet someone like me.”</p>
+
+    <p>Edward chuckled softly, though there was little humor in it. “I don’t often meet anyone.”</p>
+
+    <p>Gabriel was unsure how to proceed. They stood there for a long moment, two strangers facing each other, neither knowing exactly what to say. Finally, Gabriel spoke again, his voice soft. “I’ve heard... I’ve heard that you create things. Art, maybe?”</p>
+
+    <p>Edward nodded, his gaze flickering toward the garden behind him, where Gabriel could just make out the outlines of sculptures and topiaries, oddly beautiful in their surreal, jagged forms.</p>
+
+    <p>“I carve,” Edward said, a flicker of pride in his eyes. “Not much else to do around here.”</p>
+
+    <p>Gabriel smiled. “May I see?”</p>
+
+    <p>Edward hesitated for a brief moment before stepping aside to let Gabriel in. “Of course.”</p>
+
+    <div class="image-note">
+      <h3>Image note</h3>
+      <p>Place an image of the mansion exterior here:</p>
+      <div class="slot">
+        <!-- Example: <img src="assets/mansion.jpg" alt="Crumbling mansion in the woods" /> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Three -->
+    <h2>Chapter Three: The World of Edward Scissorhands</h2>
+    <p>The inside of the mansion was much like its exterior—grand but worn, with an air of neglect and abandonment. Yet, as Gabriel stepped inside, he couldn’t help but notice the small details: the carefully placed sculptures, the delicate carvings on the walls, the artistry in every corner of the house. It was clear that Edward had created all of it with those sharp blades—each piece of art, though strange and unorthodox, had a unique beauty.</p>
+
+    <p>“Do you ever show your work to others?” Gabriel asked as they walked through the rooms, his fingers brushing over the smooth edges of an intricately carved chair.</p>
+
+    <p>Edward shrugged. “No one ever comes. People don’t want to see me. They only want to be afraid of me. Or pity me.”</p>
+
+    <p>Gabriel studied Edward for a long moment. There was a vulnerability to him, a quiet sadness that Gabriel hadn’t expected. Here was a man—if he could even be called a man—who had lived his entire life in the shadows, creating beauty that the world had never witnessed. He had never been allowed to share his gifts with others, to be seen as something other than a freak, a monster. And yet, he had never given up. The work spoke for itself.</p>
+
+    <p>“You don’t pity me,” Edward said suddenly, his voice cutting through Gabriel’s thoughts.</p>
+
+    <p>Gabriel was taken aback. “Of course not. I don’t pity you. I admire you.” His words were spoken with quiet sincerity. He wasn’t sure why, but the more he learned about Edward, the more he saw beyond the blades, beyond the isolation. There was something deeply human about him.</p>
+
+    <p>Edward looked away, his lips curving into the faintest trace of a smile. “You’re different,” he said. “Most people look at my hands before they look at me.”</p>
+
+    <p>Gabriel smiled, soft and distant. “Then they’re fools.”</p>
+
+    <p>And in that moment, something shifted—a recognition that this meeting, once born of curiosity, would change them both.</p>
+
+    <div class="image-note">
+      <h3>Image note</h3>
+      <p>Place an image of Edward’s sculptures (topiaries/carvings):</p>
+      <div class="slot">
+        <!-- Example: <img src="assets/garden-topiary.jpg" alt="Surreal topiary sculptures" /> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Four -->
+    <h2>Chapter Four: The Weight of the World</h2>
+    <p>Over the weeks that followed, Gabriel found himself returning to the mansion more often than he had intended. What had begun as a study in curiosity grew into something deeper—an unspoken companionship, fragile and strange. Edward, who had once feared human company, began to wait for Gabriel’s visits, tidying corners of his decaying home in anticipation.</p>
+
+    <p>They spoke about everything: about loneliness, about creation, about the strange balance between beauty and pain. Gabriel confessed how politics had begun to hollow him out, how his life had become a performance of ideals he no longer believed in. Edward listened in silence, occasionally carving while he spoke, his scissors whispering against wood like the sound of rain.</p>
+
+    <p>Sometimes they didn’t speak at all. They would walk through the garden, through rows of sculptures Edward had shaped from overgrown hedges—animals, faces, fragments of emotion frozen in leaves. Under the pale light of early winter, it looked like a dream that the world had forgotten.</p>
+
+    <p>Yet the outside world crept closer. Kim had noticed Gabriel’s absence, his growing detachment from the bustle of Parisian life. One evening, she confronted him. “You’ve changed,” she said. “You disappear for hours. You’re distracted in meetings. What are you hiding out there?”</p>
+
+    <p>Gabriel hesitated. “Someone you should meet,” he said finally. “Someone who deserves to be seen.”</p>
+
+    <p>But he wasn’t sure if Edward was ready to be seen. Or if the world was ready for him.</p>
+
+    <div class="image-note">
+      <h3>Image note</h3>
+      <p>Place an image of the winter garden or a quiet interior scene:</p>
+      <div class="slot">
+        <!-- Example: <img src="assets/winter-garden.jpg" alt="Pale winter light across sculpted hedges" /> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="brand">© 2025 — Elysian Shears</div>
+    <pre>
+MIT License
+
+Copyright (c) 2025 Ryatt
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this work and associated documentation files (the "Work"), to deal in the
+Work without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Work, and to permit persons to whom the Work is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Work.
+
+THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE WORK OR THE USE OR OTHER DEALINGS IN THE WORK.
+    </pre>
+  </footer>
+</body>
+</html>
