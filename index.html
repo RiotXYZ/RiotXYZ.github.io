@@ -1,125 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Elysian Shears</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #faf8f5;
-      --text: #2c2c2c;
-      --accent: #7b3f61;
-      --muted: #555;
-      --max-width: 850px;
-    }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Playfair Display', serif;
-      line-height: 1.9;
-      font-size: 1.1rem;
-    }
-    header {
-      background: var(--accent);
-      color: white;
-      padding: 3rem 1rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-family: 'Great Vibes', cursive;
-      font-size: 3.5rem;
-      letter-spacing: 2px;
-    }
-    header p {
-      margin: 0.5rem 0 0;
-      font-style: italic;
-      font-size: 1.2rem;
-    }
-    main {
-      max-width: var(--max-width);
-      margin: 3rem auto;
-      padding: 0 1.5rem;
-    }
-    h2 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.4rem;
-      color: var(--accent);
-      margin-top: 3rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    p {
-      margin: 1.4rem 0;
-      text-align: justify;
-    }
-    blockquote {
-      margin: 2rem auto;
-      padding: 1.2rem 1.5rem;
-      background: #f5eef3;
-      border-left: 5px solid var(--accent);
-      font-style: italic;
-      color: var(--muted);
-      max-width: 700px;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.9rem;
-      color: var(--muted);
-      border-top: 1px solid #ddd;
-    }
-    footer pre {
-      text-align: left;
-      max-width: var(--max-width);
-      margin: 1rem auto;
-      padding: 1rem;
-      background: #f9f9f9;
-      border: 1px solid #ddd;
-      overflow-x: auto;
-      font-size: 0.8rem;
-      white-space: pre-wrap;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Elysian Shears</h1>
-    <p>An personal fanfiction</p>
-  </header>
+/* Add a subtle parchment texture vibe */
+body {
+  background: linear-gradient(180deg, #faf8f5 0%, #fdfdfb 100%);
+  background-attachment: fixed;
+}
 
-  <main>
-    <h2>Chapter One: The Curiosity of Gabriel Attal</h2>
-    <p>Gabriel Attal was not a man easily captivated. Raised among the grind of politics, he had long learned to shield himself from anything too extraordinary...</p>
+/* Drop-cap effect for first letter of each chapter */
+main p:first-of-type::first-letter {
+  float: left;
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.5rem;
+  line-height: 1;
+  margin-right: 0.4rem;
+  color: var(--accent);
+}
 
-    <blockquote>
-      "He's real, you know," Kim had said, swirling her wine glass.  
-      "Edward Scissorhands. Lives in a mansion on the outskirts of the city..."
-    </blockquote>
+/* Fancy divider between chapters */
+h2::before, h2::after {
+  content: "✦";
+  color: var(--accent);
+  margin: 0 0.5rem;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+h2 {
+  position: relative;
+  text-align: center;
+  font-size: 2.6rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+}
 
-    <p>At first, Gabriel had been skeptical, dismissing it as the kind of sensationalism he was used to in the media...</p>
+/* Smooth fade-in animation for paragraphs */
+p, blockquote {
+  animation: fadeIn 1.2s ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    <h2>Chapter Two: The Mansion in the Woods</h2>
-    <p>The mansion was nothing like Gabriel had expected. It was vast and intimidating, a crumbling relic from another time...</p>
+/* Blockquote glow */
+blockquote {
+  border-left: 5px solid var(--accent);
+  background: #f9f5f8;
+  box-shadow: 0 2px 6px rgba(123,63,97,0.1);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  transition: transform 0.3s ease;
+}
+blockquote:hover {
+  transform: scale(1.02);
+}
 
-    <h2>Chapter Three: The World of Edward Scissorhands</h2>
-    <p>The inside of the mansion was much like its exterior—grand but worn, with an air of neglect and abandonment...</p>
-
-    <h2>Chapter Four: The Weight of the World</h2>
-    <p>Over the weeks that followed, Gabriel found himself returning to the mansion more often than he had intended...</p>
-  </main>
-
-  <footer>
-    <p>© 2025 — Blades of Change</p>
-    <pre>
-MIT License
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files...
-    </pre>
-  </footer>
-</body>
-</html>
-
+/* Footer subtle flourish */
+footer {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
