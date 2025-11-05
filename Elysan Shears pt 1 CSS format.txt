@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elysian Shears — Part 1</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fefcf8;
+      --paper: #fffaf2;
+      --ink: #1c1b1a;
+      --text: #2c2c2c;
+      --muted: #5a5a5a;
+      --max-width: 980px;
+
+      /* Accents (alternating per chapter) */
+      --accent1: #7b3f61;  /* plum */
+      --accent2: #3f617b;  /* deep blue */
+      --accent3: #7b6f3f;  /* muted gold */
+      --accent4: #6b9ea3;  /* sea glass */
+      --accent5: #8b5e72;  /* rosewood */
+      --accent6: #5c7b6b;  /* moss blue */
+    }
+
+    /* Base layout */
+    html, body { margin: 0; padding: 0; }
+    body {
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #fff 0%, #f6f1eb 60%, #eee7df 100%),
+        linear-gradient(180deg, #fefcf8 0%, #fbf9f6 100%);
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: 'Playfair Display', serif;
+      line-height: 1.92;
+      font-size: 1.18rem;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 55%, var(--accent4) 100%);
+      color: white;
+      text-align: center;
+      padding: 3.5rem 1rem 3rem;
+      box-shadow: 0 14px 40px rgba(63, 97, 123, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(800px 200px at 60% -20%, rgba(255,255,255,0.35), transparent 70%);
+      pointer-events: none;
+      animation: shimmer 6s ease-in-out infinite alternate;
+    }
+    @keyframes shimmer {
+      from { opacity: 0.2; transform: translateX(-4%); }
+      to   { opacity: 0.5; transform: translateX(4%); }
+    }
+    header h1 {
+      margin: 0;
+      font-family: 'Great Vibes', cursive;
+      font-size: 4.3rem;
+      letter-spacing: 1.5px;
+      animation: fadeInDown 1.5s ease;
+    }
+    header p {
+      margin: 0.75rem 0 0;
+      font-style: italic;
+      font-size: 1.2rem;
+      opacity: 0.95;
+      animation: fadeInUp 2s ease;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Table of contents */
+    nav.toc {
+      max-width: var(--max-width);
+      margin: 1.5rem auto 0;
+      padding: 1rem 1.25rem;
+      background: #f3efe8;
+      border: 1px solid #e4d8c9;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      animation: fadeIn 1s ease both;
+    }
+    nav.toc h3 {
+      margin: 0 0 0.6rem;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: var(--accent1);
+      text-align: center;
+    }
+    nav.toc ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      list-style: none;
+      padding: 0;
+      margin: 0.2rem 0 0;
+      justify-content: center;
+    }
+    nav.toc a {
+      display: inline-block;
+      padding: 0.45rem 0.75rem;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--accent2);
+      border: 1px solid #d7cfc6;
+      background: #fcfaf6;
+      transition: all 0.25s ease;
+      font-weight: 700;
+    }
+    nav.toc a:hover {
+      color: white;
+      background: var(--accent2);
+      border-color: var(--accent2);
+      transform: translateY(-1px);
+    }
+
+    /* Main "paper" */
+    main {
+      max-width: var(--max-width);
+      margin: 2rem auto 3rem;
+      padding: 2.2rem 1.6rem;
+      background: var(--paper);
+      border: 1px solid #e8dccf;
+      border-radius: 16px;
+      box-shadow:
+        0 2px 6px rgba(0,0,0,0.05),
+        0 22px 66px rgba(63, 97, 123, 0.15);
+      animation: fadeIn 1.2s ease both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Chapter headings (alternating colors) */
+    h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      margin: 3.2rem auto 1.6rem;
+      text-align: center;
+      position: relative;
+      letter-spacing: 0.5px;
+    }
+    h2:nth-of-type(1) { color: var(--accent1); }
+    h2:nth-of-type(2) { color: var(--accent2); }
+    h2:nth-of-type(3) { color: var(--accent3); }
+    h2:nth-of-type(4) { color: var(--accent4); }
+    h2:nth-of-type(5) { color: var(--accent5); }
+    h2:nth-of-type(6) { color: var(--accent6); }
+    h2::before, h2::after {
+      content: "✦";
+      margin: 0 0.6rem;
+      font-size: 1.2rem;
+      opacity: 0.8;
+      color: inherit;
+    }
+    /* subtle reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 600ms ease, transform 600ms ease;
+      will-change: opacity, transform;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Paragraphs */
+    p {
+      margin: 1.25rem 0;
+      text-align: justify;
+      color: var(--ink);
+    }
+    /* Drop-cap for first paragraph after each chapter heading */
+    h2 + p::first-letter {
+      float: left;
+      font-family: 'Great Vibes', cursive;
+      font-size: 4rem;
+      line-height: 1;
+      margin-right: 0.5rem;
+      margin-top: 0.2rem;
+      color: currentColor;
+    }
+
+    /* Quotes / blockquotes */
+    blockquote {
+      margin: 1.8rem auto;
+      padding: 1rem 1.25rem;
+      background: #f9f6f2;
+      border-left: 5px solid #caa7bf;
+      font-style: italic;
+      color: var(--muted);
+      max-width: 740px;
+      box-shadow: 0 2px 10px rgba(123,63,97,0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    blockquote:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(123,63,97,0.18);
+    }
+
+    /* Scene divider */
+    .scene-divider {
+      margin: 2.2rem auto;
+      text-align: center;
+      opacity: 0.8;
+    }
+    .scene-divider span {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      color: #8b5e72;
+      border-top: 1px solid #e7d6e3;
+      border-bottom: 1px solid #e7d6e3;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.2rem;
+    }
+
+    /* Image comment boxes (smaller) */
+    .image-note {
+      margin: 1.2rem auto;
+      padding: 0.7rem 0.85rem;
+      border: 1px dashed #bda6b6;
+      border-radius: 10px;
+      background: #fffdfb;
+      color: #3a2b33;
+      max-width: 340px;
+      font-size: 0.92rem;
+      text-align: left;
+    }
+    .image-note h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+      color: #8b5e72;
+    }
+    .image-note .slot {
+      margin-top: 0.6rem;
+      padding: 0.6rem;
+      background: #fff;
+      border: 1px solid #e3d5df;
+      border-radius: 8px;
+      text-align: center;
+      color: #7d6b75;
+      font-size: 0.9rem;
+    }
+
+    /* Floating “Back to top” button */
+    .back-to-top {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: var(--accent2);
+      color: #fff;
+      padding: 0.6rem 0.9rem;
+      border-radius: 10px;
+      text-decoration: none;
+      box-shadow: 0 8px 18px rgba(63,97,123,0.25);
+      opacity: 0.9;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+      font-weight: 700;
+    }
+    .back-to-top:hover {
+      opacity: 1;
+      transform: translateY(0);
+      background: var(--accent1);
+    }
+
+    /* Footer + License */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.98rem;
+      color: var(--muted);
+    }
+    footer .brand {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      color: var(--accent1);
+      margin-bottom: 0.5rem;
+    }
+    footer pre {
+      text-align: left;
+      max-width: var(--max-width);
+      margin: 1rem auto;
+      padding: 1rem;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      color: #333;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <a id="top"></a>
+  <header>
+    <h1>Elysian Shears</h1>
+    <p>A Gothic Tale</p>
+  </header>
+
+  <!-- Table of Contents -->
+  <nav class="toc">
+    <h3>Table of contents</h3>
+    <ul>
+      <li><a href="#ch1">Chapter 1: The Curiosity of Gabriel Attal</a></li>
+      <li><a href="#ch2">Chapter 2: The Mansion in the Woods</a></li>
+      <li><a href="#ch3">Chapter 3: The World of Edward Scissorhands</a></li>
+      <li><a href="#ch4">Chapter 4: The Weight of the World</a></li>
+      <li><a href="#ch5">Chapter 5: The Garden of Shadows</a></li>
+      <li><a href="#ch6">Chapter 6: Whispers of the City</a></li>
+      <li><a href="#ch7">Chapter 7: The Invitation</a></li>
+      <li><a href="#ch8">Chapter 8: The Choice</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- Chapter One -->
+    <h2 id="ch1" class="reveal">Chapter One: The Curiosity of Gabriel Attal</h2>
+    <p class="reveal">insert yor text here in chapter [1] header[]</p>
+    <p class="reveal">insert yor text here in chapter [1] header[]</p>
+    <p class="reveal">insert yor text here in chapter [1] header[]</p>
+    <blockquote class="reveal">insert yor text here in chapter [1] header[]</blockquote>
+    <p class="reveal">insert yor text here in chapter [1] header[]</p>
+    <p class="reveal">insert yor text here in chapter [1] header[]</p>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Two -->
+    <h2 id="ch2" class="reveal">Chapter Two: The Mansion in the Woods</h2>
+    <p class="reveal">insert yor text here in chapter [2] header[]</p>
+    <p class="reveal">insert yor text here in chapter [2] header[]</p>
+    <p class="reveal">insert yor text here in chapter [2] header[]</p>
+    <p class="reveal">insert yor text here in chapter [2] header[]</p>
+    <p class="reveal">insert yor text here in chapter [2] header[]</p>
+    <p class="reveal">insert yor text here in chapter [2] header[]</p>
+    <p class="reveal">insert yor text here in chapter [2] header[]</p>
+    <p class="reveal">insert yor text here in chapter [2] header[]</p>
+
+    <div class="image-note reveal">
+      <h3>Illustration note</h3>
+      <p>Place a mansion exterior image here:</p>
+      <div class="slot">
+        <!-- <img src="assets/mansion.jpg" alt="Crumbling mansion in the woods"> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Three -->
+    <h2 id="ch3" class="reveal">Chapter Three: The World of Edward Scissorhands</h2>
+    <p class="reveal">insert yor text here in chapter [3] header[]</p>
+    <p class="reveal">insert yor text here in chapter [3] header[]</p>
+    <p class="reveal">insert yor text here in chapter [3] header[]</p>
+    <p class="reveal">insert yor text here in chapter [3] header[]</p>
+    <p class="reveal">insert yor text here in chapter [3] header[]</p>
+    <p class="reveal">insert yor text here in chapter [3] header[]</p>
+    <p class="reveal">insert yor text here in chapter [3] header[]</p>
+
+    <div class="image-note reveal">
+      <h3>Illustration note</h3>
+      <p>Place an image of sculptures or carvings:</p>
+      <div class="slot">
+        <!-- <img src="assets/sculptures.jpg" alt="Surreal topiary and carved wood"> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Four -->
+    <h2 id="ch4" class="reveal">Chapter Four: The Weight of the World</h2>
+    <p class="reveal">insert yor text here in chapter [4] header[]</p>
+    <p class="reveal">insert yor text here in chapter [4] header[]</p>
+    <p class="reveal">insert yor text here in chapter [4] header[]</p>
+    <p class="reveal">insert yor text here in chapter [4] header[]</p>
+    <p class="reveal">insert yor text here in chapter [4] header[]</p>
+    <p class="reveal">insert yor text here in chapter [4] header[]</p>
+    <p class="reveal">insert yor text here in chapter [4] header[]</p>
+
+    <div class="image-note reveal">
+      <h3>Illustration note</h3>
+      <p>Place a winter garden image:</p>
+      <div class="slot">
+        <!-- <img src="assets/winter-garden.jpg" alt="Pale winter garden and sculpted hedges"> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Five -->
+    <h2 id="ch5" class="reveal">Chapter Five: The Garden of Shadows</h2>
+    <p class="reveal">insert yor text here in chapter [5] header[]</p>
+    <p class="reveal">insert yor text here in chapter [5] header[]</p>
+    <p class="reveal">insert yor text here in chapter [5] header[]</p>
+    <p class="reveal">insert yor text here in chapter [5] header[]</p>
+    <p class="reveal">insert yor text here in chapter [5] header[]</p>
+    <p class="reveal">insert yor text here in chapter [5] header[]</p>
+    <p class="reveal">insert yor text here in chapter [5] header[]</p>
+    <p class="reveal">insert yor text here in chapter [5] header[]</p>
+
+    <div class="image-note reveal">
+      <h3>Illustration note</h3>
+      <p>Place a night carving image:</p>
+      <div class="slot">
+        <!-- <img src="assets/moonlight-carving.jpg" alt="Edward carving by moonlight"> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Six (New): Whispers of the City -->
+    <h2 id="ch6" class="reveal">Chapter Six: Whispers of the City</h2>
+    <p class="reveal">insert yor text here in chapter [6] header[]</p>
+    <p class="reveal">insert yor text here in chapter [6] header[]</p>
+    <p class="reveal">insert yor text here in chapter [6] header[]</p>
+    <p class="reveal">insert yor text here in chapter [6] header[]</p>
+    <p class="reveal">insert yor text here in chapter [6] header[]</p>
+    <p class="reveal">insert yor text here in chapter [6] header[]</p>
+    <p class="reveal">insert yor text here in chapter [6] header[]</p>
+
+    <div class="image-note reveal">
+      <h3>Illustration note</h3>
+      <p>Place an image of city papers/whispers:</p>
+      <div class="slot">
+        <!-- <img src="assets/city-whispers.jpg" alt="Paris papers and quiet rumor"> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Seven (New): The Invitation -->
+    <h2 id="ch7" class="reveal">Chapter Seven: The Invitation</h2>
+    <p class="reveal">insert yor text here in chapter [7] header[]</p>
+    <p class="reveal">insert yor text here in chapter [7] header[]</p>
+    <p class="reveal">insert yor text here in chapter [7] header[]</p>
+    <p class="reveal">insert yor text here in chapter [7] header[]</p>
+    <p class="reveal">insert yor text here in chapter [7] header[]</p>
+    <p class="reveal">insert yor text here in chapter [7] header[]</p>
+
+    <div class="image-note reveal">
+      <h3>Illustration note</h3>
+      <p>Place an image of the letter/invitation:</p>
+      <div class="slot">
+        <!-- <img src="assets/invitation.jpg" alt="Museum invitation on parchment"> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+
+    <div class="scene-divider"><span>❧</span></div>
+
+    <!-- Chapter Eight: The Choice (opening; will continue in Part 2) -->
+    <h2 id="ch8" class="reveal">Chapter Eight: The Choice</h2>
+    <p class="reveal">insert yor text here in chapter [8] header[]</p>
+    <p class="reveal">insert yor text here in chapter [8] header[]</p>
+    <p class="reveal">insert yor text here in chapter [8] header[]</p>
+    <p class="reveal">insert yor text here in chapter [8] header[]</p>
+    <p class="reveal">insert yor text here in chapter [8] header[]</p>
+    <p class="reveal">insert yor text here in chapter [8] header[]</p>
+
+    <div class="image-note reveal">
+      <h3>Illustration note</h3>
+      <p>Place an image of museum arches/gathering:</p>
+      <div class="slot">
+        <!-- <img src="assets/museum-arches.jpg" alt="Quiet museum, small gathering"> -->
+        Add your image tag inside this box.
+      </div>
+    </div>
+  </main>
+
+  <a href="#top" class="back-to-top">Back to top</a>
+
+  <footer>
+    <div class="brand">© 2025 — Elysian Shears</div>
+    <pre>
+MIT License
+
+Copyright (c) 2025 Ryatt
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this work and associated documentation files (the "Work"), to deal in the
+Work without restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Work, and to permit persons to whom the Work is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Work.
+
+THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE WORK OR THE USE OR OTHER DEALINGS IN THE WORK.
+    </pre>
+  </footer>
+
+  <!-- Progressive reveal on scroll -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('revealed');
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
